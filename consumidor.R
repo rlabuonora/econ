@@ -1,5 +1,6 @@
 # http://www.columbia.edu/~md3405/IM_CT.pdf
-
+library(Rsolnp)
+library(tidyverse)
 # params restriccion presupuestaria
 p1 <- 3
 p2 <- 4
@@ -22,14 +23,10 @@ sol_corr <- c(15/6, 15/8)
 x0 <- c(2, 1.5)
 
 
-
-
-
 sol <- solnp(x0, fun=u, eqfun=rest_p, eqB=0)
 
 sol_corr <- c(15/6, 15/8)
 sol$pars
-eqn1(sol$pars)
 u(sol$pars)
 
 sol_corr - sol$pars
@@ -39,8 +36,8 @@ df <- tibble(
   p2 = 0:10
 )
 
-df_2 <- expand.grid(p1 = seq(0, 5, by=0.01), 
-                    p2 = seq(0, 5, by=0.01)) %>% 
+df_2 <- expand.grid(p1 = seq(0, 6, by=0.1), 
+                    p2 = seq(0, 6, by=0.1)) %>% 
   pmap(function(p1, p2) {
     c(
       p1 = p1, 
@@ -65,9 +62,11 @@ p_opt <- sol$pars
 sol_isocuanta <- df_2 %>% filter(abs(u-u_opt) < 0.01)
 
 ggplot(df_2, aes(p1, p2)) + 
-  geom_contour(aes(z=u)) +
-  geom_line(data = sol_isocuanta) + 
-  geom_segment(x = M/p1, y = 0, xend = 0, yend = M/p2, size=0.1) + 
-  geom_point(aes(x=sol$pars[1], y=sol$pars[2]))
+  geom_contour(aes(z=u), breaks = c(1, 3, 4)) +
+  geom_segment(x = M/p1, y = 0, xend = 0, yend = M/p2, size=0.1, color="red") + 
+  geom_point(aes(x=sol$pars[1], y=sol$pars[2])) + 
+  stat_contour(color='red', breaks = u_opt, mapping = aes(z=u)) + 
+  xlim(c(0, 6)) + 
+  ylim(c(0, 6))
   
 

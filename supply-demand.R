@@ -49,7 +49,7 @@ ggplot(mapping = aes(x=x, y=y)) +
 
 # pg. 76
 
-ggplot(mapping = aes(x=x, y=y)) + 
+base <- ggplot(mapping = aes(x=x, y=y)) + 
   geom_line(data = line.1, aes(color=name)) + 
   geom_line(data = line.2, aes(color=name)) + 
   geom_segment(lty = "dashed", 
@@ -70,4 +70,34 @@ ggplot(mapping = aes(x=x, y=y)) +
         axis.title.x = 
           element_text(hjust=0.95, vjust=6))  +
   labs(x="X", y="P")
+
+
+
+horizontal_y <- 3.5
+horizontal <- data.frame(x=c(0, x_max), y=c(horizontal_y), name="mover")
+
+line.intersection.1 <- curve_intersect(line.1, horizontal)
+line.intersection.2 <- curve_intersect(line.2, horizontal)
+
+
+base + 
+  annotate("segment", x=0, y=horizontal_y, 
+                      xend=line.intersection.2$x, yend=line.intersection.2$y, color="blue") +
+  annotate("segment", x=line.intersection.2$x, y=line.intersection.2$y, 
+                      xend=line.intersection.1$x, yend=line.intersection.1$y, color="red")
+
+
+horizontal_y <- 1.5
+horizontal <- data.frame(x=c(0, x_max), y=c(horizontal_y), name="mover")
+
+line.intersection.1 <- curve_intersect(line.1, horizontal)
+line.intersection.2 <- curve_intersect(line.2, horizontal)
+
+
+base + 
+  annotate("segment", x=0, y=horizontal_y, 
+           xend=line.intersection.2$x, yend=line.intersection.2$y, color="blue") +
+  annotate("segment", x=line.intersection.2$x, y=line.intersection.2$y, 
+           xend=line.intersection.1$x, yend=line.intersection.1$y, color="red")
+
 

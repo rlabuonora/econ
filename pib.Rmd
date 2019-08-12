@@ -1,0 +1,75 @@
+---
+title: "pib"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## PIB
+
+Es una medida de todos los bienes y servicios que produce la economía de una región o país en un período de tiempo.
+
+### Dos formas: Flujo de bienes y flujo de ingresos
+
+La producción de un país puede medirse como el flujo de bienes y servicios producidos o como la suma de los ingresos que estos bienes y servicios generan.
+
+
+```{r echo = FALSE}
+library(DiagrammeR)
+grViz("
+digraph boxes_and_circles {
+
+  # a 'graph' statement
+  graph [overlap = true, fontsize = 10]
+
+  # several 'node' statements
+  node [shape = box,
+        fontname = Helvetica]
+  Empresas; Consumidores
+
+  node [shape = circle,
+        fixedsize = true,
+        width = 0.9] // sets as circles
+  Bienes; Factores
+
+  # several 'edge' statements
+  Empresas->Bienes Empresas->Factores 
+  Factores->Consumidores Bienes->Consumidores
+}
+")
+```
+
+## BB y SS
+
+En una economía donde solo se producen bienes finales de consumo, el PIB se calcula como:
+
+$$ P_{papas} * Q_{papas} + P_{boniatos} * Q_{boniatos} + ... $$
+
+Para poder medir todos los productos que produce la economía, se usa el valor monetario de la producción tomando en cuenta los precios. Si usamos los precios del período en que produjeron los bienes, tenemos el PIB _en precios corrientes_. Si queremos sacar el efecto de los cambios en los precios para comparar el PIB de dos períodos, tomamos los precios de un _año base_, para calcular el PIB en precios constantes de ese año.
+
+$$ PIB = C + I + G + X$$
+
+## Ingresos
+
+Como todo lo que se vende en el mercado es el ingreso de algún factor (trabajo, capital, tierra), el PIB es igual si se mide por las ventas de las empresas o por las remuneraciones a los factores.
+
+$$ PIB = Sueldos + Beneficios + Rentas + Impuestos\ Netos + Depreciación $$
+
+## El problema de la doble contabilización
+
+¿Qué pasa con los productos que no son comprados para ser consumidos (bienes finales), sino que son comprados por otras empresas como insumos para producir otros bienes?
+
+En la parte superior del gráfico, solo se toman en cuenta las ventas de bienes finales. En la parte inferior del gráfico, solo se toma en cuenta el valor agregado de cada empresa. Esto es la diferencia entre el valor de lo que compra (materias primas, etc.) y lo que vende.
+
+| Etapa                | Ventas      | Costos| Valor  |
+| -------------------- |-------------|-------|--------|
+| Trigo                | 23          |  0    |  23    |
+| Harina               | 53          |  23   |  30    |
+| Horneado y Congelado | 110         |  53   |  57    |
+| Pan                  | 190         | 110   |  80    |
+| Total                | 376         | 186   |  190   |
+
+
+## PIB real y PIB nominal

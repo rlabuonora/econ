@@ -20,7 +20,8 @@ ggplot(demanda_elastica, aes(cantidad, precio)) +
   geom_point() + 
   geom_rect(mapping=aes(xmin = 0, xmax = cantidad, ymin = 0, ymax = precio), alpha=0.5) + 
   scale_x_continuous(expand=c(0, 0), limits = c(0, 4)) + 
-  scale_y_continuous(expand=c(0, 0), limits = c(0, 1100)) +
+  scale_y_continuous(expand=c(0, 0), limits = c(0, 1100)) 
++
   bbc_style() 
 
 # chequear extend options!
